@@ -1,0 +1,46 @@
+import os
+import openpyxl as op
+
+def save_xlsx(protocol, result, date):
+
+result = 'Proceeding: 0 Success: 30,683,969 TimeOut: 0 Failed: 51,356'
+protocol = 'LMS_DATA'
+date = '2023-11-29'
+xlsx_path = 'C:/Users/xxxxxxxx/OneDrive - HMGNA/Documents/Python_project/crawling/NorthAmerica/xlsx/'
+file_path = xlsx_path + 'NorthAmerica' + '.xlsx'
+xlsx_sheet = True
+
+if os.path.isdir(xlsx_path) is False :
+    os.makedirs(xlsx_path, exist_ok=True)
+
+# 엑셀 파일 없는 경우
+try:
+    workbook = op.load_workbook(file_path)
+except Exception:
+    workbook = op.Workbook()
+    workbook.save(file_path)
+    workbook = op.load_workbook(file_path)
+
+# 시트가 없는 경우
+try:
+    sheet = workbook[protocol]
+    # 같은 날짜에 스크립트 중복 실행으로 인한 중복 입력 방지
+    # xlsx 마지막 줄과 날짜 비교
+except Exception:
+    xlsx_sheet = False
+    workbook.create_sheet(protocol, -1)
+    sheet = workbook[protocol]
+    
+# 마지막 행과 비교
+if xlsx_sheet is True:
+    date_in_excel = str(sheet.cell(sheet.max_row, 1).value)
+    date_in_excel = date_in_excel[:10]
+
+    # 중복이라면 False returns
+    if str(date) == date_in_excel:
+        return False
+
+result = result.split(' ')
+sheet.append([date, 'NorthAmerica', result[3], result[7]])
+workbook.save(file_path)
+return True
