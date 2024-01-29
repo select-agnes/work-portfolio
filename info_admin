@@ -1,0 +1,30 @@
+"""Module associated with user information
+"""
+import os
+
+USR = "a username"
+PWD = "a password"
+
+USR_PATH="C:/Users/xxxxxxxx/OneDrive - HMGNA/Documents/Python_project/crawling/NorthAmerica/info/"
+
+def get_info_admin():
+"""Gets the user's ID and password information.
+
+Returns:
+    list[string, string]: Returns the user's ID and password written on the notepad.
+
+Explain:
+    Returns the default if nothing is written in the notepad.
+"""
+if os.path.isdir(USR_PATH) is False :
+os.makedirs(USR_PATH, exist_ok=True)
+try:
+with open(USR_PATH + 'login.txt', 'r', encoding='utf-8') as file_discriptor:
+lines = file_discriptor.readlines()
+written_id = lines[0].replace("ID:", "").replace("\n","")
+written_pw = lines[1].replace("PW:", "").replace("\n","")
+if written_id == "" or written_pw == "":
+return [USR, PWD]
+return [written_id, written_pw]
+except Exception:
+return [USR, PWD]
