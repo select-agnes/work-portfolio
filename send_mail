@@ -1,0 +1,105 @@
+import smtplib
+import os
+from email.mime.text import MIMEText
+from email.mime.image import MIMEImage
+from email.mime.multipart import MIMEMultipart
+from email.mime.base import MIMEBase
+from email.encoders import encode_base64
+
+DEFAULT_PATH = "C:/Users/xxxxxxxx/OneDrive - HMGNA/Documents/Python_project/crawling/NorthAmerica/"
+
+def send(protocols, results, yesterday):
+smtp = smtplib.SMTP('xxxxxxxxx.xxxxxxx.xxx', 25)
+smtp.ehlo()
+smtp.starttls()
+smtp.login('an email address', 'A!0SM01160')
+
+data = MIMEMultipart("mixed")
+
+with open(DEFAULT_PATH + "images/" +
+          str(yesterday) + '_' + 'TOTAL' +'.png', 'rb') as file_descriptor:
+    img = MIMEImage(file_descriptor.read(), Name = str(yesterday) + 'TOTAL' + "capture.png")
+    img.add_header('Content-ID', '<capture0>')
+    data.attach(img)
+    
+# for i, protocol in enumerate(protocols):
+#     with open("D:/Python_project/crawling/images/NorthAmerica/" + str(yesterday) + '_' + str(protocol) +'.png', 'rb') as fp:
+#          img = MIMEImage(fp.read(), Name = str(yesterday) + str(protocol) + "capture.png")
+#          img.add_header('Content-ID', '<capture' + str(i) + '>')
+#          data.attach(img)
+         
+for i in range(7):
+    results[i] = results[i].split(' ')
+    results[i][3] = results[i][3].replace(',','')
+    results[i][7] = results[i][7].replace(',','')
+    results[i][3] = int(results[i][3])
+    results[i][7] = int(results[i][7])
+        
+msg = MIMEText('<table border="1">'
+                    '<th>Protocol</th>'
+                    '<th>Number of Successes</th>'
+                    '<th>Number of Failures</th>'
+                    '<th>Failure Rate</th>'
+                    '<tr>'
+                        '<td>TOTAL</td>'
+                        '<td style="text-align: right;">' + str(format(results[0][3],',')) + '</td>'
+                        '<td style="text-align: right;">' + str(format(results[0][7],',')) + '</td>'
+                        '<td style="text-align: right;">' + str(round(results[0][7]/(results[0][3] + results[0][7]) * 100, 2)) + '</td>'
+                    '</tr>'
+                    '<tr>'
+                        '<td>RUT - A</td>'
+                        '<td style="text-align: right;">' + str(format(results[1][3],',')) + '</td>'
+                        '<td style="text-align: right;">' + str(format(results[1][7],',')) + '</td>'
+                        '<td style="text-align: right;">' + str(round(results[1][7]/(results[1][3] + results[1][7]) * 100, 2)) + '</td>'
+                    '</tr>'
+                    '<tr>'
+                        '<td>GRP - F</td>'
+                        '<td style="text-align: right;">' + str(format(results[2][3],',')) + '</td>'
+                        '<td style="text-align: right;">' + str(format(results[2][7],',')) + '</td>'
+                        '<td style="text-align: right;">' + str(round(results[2][7]/(results[2][3] + results[2][7]) * 100, 2)) + '</td>'
+                    '</tr>'
+                    '<tr>'
+                        '<td>GRP - P</td>'
+                        '<td style="text-align: right;">' + str(format(results[3][3],',')) + '</td>'
+                        '<td style="text-align: right;">' + str(format(results[3][7],',')) + '</td>'
+                        '<td style="text-align: right;">' + str(round(results[3][7]/(results[3][3] + results[3][7]) * 100, 2)) + '</td>'
+                    '</tr>'
+                    '<tr>'
+                        '<td>GRP - E</td>'
+                        '<td style="text-align: right;">' + str(format(results[4][3],',')) + '</td>'
+                        '<td style="text-align: right;">' + str(format(results[4][7],',')) + '</td>'
+                        '<td style="text-align: right;">' + str(round(results[4][7]/(results[4][3] + results[4][7]) * 100, 2)) + '</td>'
+                    '</tr>'
+                    '<tr>'
+                        '<td>GRP - U</td>'
+                        '<td style="text-align: right;">' + str(format(results[5][7],',')) + '</td>'
+                        '<td style="text-align: right;">' + str(format(results[5][7],',')) + '</td>'
+                        '<td style="text-align: right;">' + str(round(results[5][7]/(results[5][3] + results[5][7]) * 100, 2)) + '</td>'
+                    '</tr>'
+                    '<tr>'
+                        '<td>GRP - I</td>'
+                        '<td style="text-align: right;">' + str(format(results[6][3],',')) + '</td>'
+                        '<td style="text-align: right;">' + str(format(results[6][7],',')) + '</td>'
+                        '<td style="text-align: right;">' + str(round(results[6][7]/(results[6][3] + results[6][7]) * 100, 2)) + '</td>'
+                    '</tr>'
+                '</table>'
+
+               "<br /><img width='1250' src='cid:capture0'> <br />", 'html')
+data.attach(msg)
+
+files = list()
+files.append('C:/Users/xxxxxxxx/OneDrive - HMGNA/Documents/Python_project/crawling/NorthAmerica/xlsx/NorthAmerica.xlsx')
+
+for file_descriptor in files:
+    part = MIMEBase('application', "xlsx")
+    part.set_payload(open(file_descriptor, "rb").read())
+    encode_base64(part)
+    part.add_header('Content-Disposition',
+                    f"attachment; filename={(os.path.basename(file_descriptor)).split('.')[0]  + '_' + str(yesterday) + '.xlsx'}")
+    data.attach(part)
+
+data['Subject'] = str(yesterday) + ' NorthAmerica LMS 모니터링 결과'
+data['To'] = 'xxxxxxxxxx@xxxxxx.com'
+smtp.sendmail('an email address', data['To'].split(','), data.as_string())
+
+smtp.quit()

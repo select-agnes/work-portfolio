@@ -1,0 +1,47 @@
+"""Module for mail sent when an error occurs during program execution
+"""
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.image import MIMEImage
+from email.mime.multipart import MIMEMultipart
+
+DEFAULT_PATH = "C:/Users/xxxxxxxx/OneDrive - HMGNA/Documents/Python_project/crawling/NorthAmerica/"
+
+def send(err_msg, HUMAN_CLOSED, yesterday):
+"""It sends a program error message and
+a captured picture (or a message indicating that it is terminated by the user) to the determined user.
+
+Args:
+    err_msg (string): Error during program execution
+    HUMAN_CLOSED (boolean): When 'True', the person terminated the chrome window
+    yesterday (date): Monitoring date information
+"""
+smtp = smtplib.SMTP('an email address', 25)
+smtp.ehlo()
+smtp.starttls()
+smtp.login('an email address', 'A!0SM01160')
+
+data = MIMEMultipart("mixed")
+
+if HUMAN_CLOSED is True:
+    msg = MIMEText(err_msg + "<br /> Windows Closed by Human <br />", 'html')
+    data.attach(msg)
+
+else:
+    with open(DEFAULT_PATH + "screenshot/" +
+              str(yesterday) + '.png', 'rb') as file_descriptor:
+        img = MIMEImage(file_descriptor.read(), Name = str(yesterday) + "screenshot.png")
+        img.add_header('Content-ID', '<capture0>')
+        data.attach(img)
+
+    msg = MIMEText(err_msg + "<br /><br /> --- Error Screenshot --- "
+                   "<br /><img width='1250' border='10px dotted black'"
+                   "padding : src='cid:capture0'> <br />", 'html')
+    data.attach(msg)
+
+data['Subject'] = str(yesterday) + ' NorthAmerica LMS 모니터링 실패'
+data['To'] = 'an email address'
+smtp.sendmail('an email address',
+              'an email address', data.as_string())
+
+smtp.quit()

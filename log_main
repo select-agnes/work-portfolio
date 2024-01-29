@@ -1,0 +1,18 @@
+"""Module related to error log
+"""
+import os
+import time
+
+def error_log(error:str):
+"""Write the error log to the specified location.
+Args:
+error (string): Error message from traceback
+"""
+LOG_PATH="C:/Users/xxxxxxxx/OneDrive - HMGNA/Documents/Python_project/crawling/NorthAmerica/log/"
+
+if os.path.isdir(LOG_PATH) is False :
+    os.makedirs(LOG_PATH, exist_ok=True)
+    
+current_time = time.strftime("%Y.%m.%d/%H:%M:%S", time.localtime(time.time()))
+with open(LOG_PATH + 'log.txt', "a", encoding="utf-8") as file_descriptor:
+    file_descriptor.write(f"[{current_time}]-{error}\n")
