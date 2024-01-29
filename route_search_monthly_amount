@@ -1,0 +1,10 @@
+WITH target AS (
+SELECT substring(opday, 1, 6) AS opMonth, *
+FROM bluelink_prd.user_od_req_full
+WHERE opday BETWEEN '20230701' AND '20230731'
+)
+
+SELECT opMonth, rp_type, count(*) AS cnt
+FROM target
+GROUP BY opMonth, rp_type
+ORDER BY opMonth, rp_type
