@@ -1,0 +1,13 @@
+SELECT opMonth, count(*)
+FROM
+(
+SELECT opMonth, device_id
+FROM
+(
+SELECT substring(opday, 1, 6) AS opMonth, *
+FROM user_od_req_full
+WHERE opday BETWEEN '20230701' and '20230731' -- 기간 지정
+) SampleDevice
+GROUP BY opMonth, device_id
+) SampleDevice
+GROUP BY opMonth
