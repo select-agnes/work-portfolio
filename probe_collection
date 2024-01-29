@@ -1,0 +1,4 @@
+SELECT count(DISTINCT device_id) as daily_count
+from user_raw_traj
+where opday in ('{OPDAY}', '{NEXT_OPDAY}')
+and time1 >= {UTC_START_TIME} and time1 < {UTC_END_TIME}
