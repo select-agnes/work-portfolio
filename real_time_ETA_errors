@@ -1,0 +1,31 @@
+with data1 as(
+select * from bluelink_prd.user_od_summary where opday in ('{OPDAY}', '{NEXT_OPDAY}')
+and od_time_stamp >= {UTC_START_TIME} and od_time_stamp < {UTC_END_TIME} and matching_flag in (0,23)
+and track_travel_time >= 0
+)
+SELECT
+round(cast(avg(case when date_format(from_unixtime((od_time_stamp-{TIME_DIFF}), 'UTC'), '%H') = '00' then (abs(track_travel_time - calc_travel_time)/600.000) end) as decimal(5,2)),2) as time_eta_diff_0
+,round(cast(avg(case when date_format(from_unixtime((od_time_stamp-{TIME_DIFF}), 'UTC'), '%H') = '01' then (abs(track_travel_time - calc_travel_time)/600.000) end) as decimal(5,2)),2) as time_eta_diff_1
+,round(cast(avg(case when date_format(from_unixtime((od_time_stamp-{TIME_DIFF}), 'UTC'), '%H') = '02' then (abs(track_travel_time - calc_travel_time)/600.000) end) as decimal(5,2)),2) as time_eta_diff_2
+,round(cast(avg(case when date_format(from_unixtime((od_time_stamp-{TIME_DIFF}), 'UTC'), '%H') = '03' then (abs(track_travel_time - calc_travel_time)/600.000) end) as decimal(5,2)),2) as time_eta_diff_3
+,round(cast(avg(case when date_format(from_unixtime((od_time_stamp-{TIME_DIFF}), 'UTC'), '%H') = '04' then (abs(track_travel_time - calc_travel_time)/600.000) end) as decimal(5,2)),2) as time_eta_diff_4
+,round(cast(avg(case when date_format(from_unixtime((od_time_stamp-{TIME_DIFF}), 'UTC'), '%H') = '05' then (abs(track_travel_time - calc_travel_time)/600.000) end) as decimal(5,2)),2) as time_eta_diff_5
+,round(cast(avg(case when date_format(from_unixtime((od_time_stamp-{TIME_DIFF}), 'UTC'), '%H') = '06' then (abs(track_travel_time - calc_travel_time)/600.000) end) as decimal(5,2)),2) as time_eta_diff_6
+,round(cast(avg(case when date_format(from_unixtime((od_time_stamp-{TIME_DIFF}), 'UTC'), '%H') = '07' then (abs(track_travel_time - calc_travel_time)/600.000) end) as decimal(5,2)),2) as time_eta_diff_7
+,round(cast(avg(case when date_format(from_unixtime((od_time_stamp-{TIME_DIFF}), 'UTC'), '%H') = '08' then (abs(track_travel_time - calc_travel_time)/600.000) end) as decimal(5,2)),2) as time_eta_diff_8
+,round(cast(avg(case when date_format(from_unixtime((od_time_stamp-{TIME_DIFF}), 'UTC'), '%H') = '09' then (abs(track_travel_time - calc_travel_time)/600.000) end) as decimal(5,2)),2) as time_eta_diff_9
+,round(cast(avg(case when date_format(from_unixtime((od_time_stamp-{TIME_DIFF}), 'UTC'), '%H') = '10' then (abs(track_travel_time - calc_travel_time)/600.000) end) as decimal(5,2)),2) as time_eta_diff_10
+,round(cast(avg(case when date_format(from_unixtime((od_time_stamp-{TIME_DIFF}), 'UTC'), '%H') = '11' then (abs(track_travel_time - calc_travel_time)/600.000) end) as decimal(5,2)),2) as time_eta_diff_11
+,round(cast(avg(case when date_format(from_unixtime((od_time_stamp-{TIME_DIFF}), 'UTC'), '%H') = '12' then (abs(track_travel_time - calc_travel_time)/600.000) end) as decimal(5,2)),2) as time_eta_diff_12
+,round(cast(avg(case when date_format(from_unixtime((od_time_stamp-{TIME_DIFF}), 'UTC'), '%H') = '13' then (abs(track_travel_time - calc_travel_time)/600.000) end) as decimal(5,2)),2) as time_eta_diff_13
+,round(cast(avg(case when date_format(from_unixtime((od_time_stamp-{TIME_DIFF}), 'UTC'), '%H') = '14' then (abs(track_travel_time - calc_travel_time)/600.000) end) as decimal(5,2)),2) as time_eta_diff_14
+,round(cast(avg(case when date_format(from_unixtime((od_time_stamp-{TIME_DIFF}), 'UTC'), '%H') = '15' then (abs(track_travel_time - calc_travel_time)/600.000) end) as decimal(5,2)),2) as time_eta_diff_15
+,round(cast(avg(case when date_format(from_unixtime((od_time_stamp-{TIME_DIFF}), 'UTC'), '%H') = '16' then (abs(track_travel_time - calc_travel_time)/600.000) end) as decimal(5,2)),2) as time_eta_diff_16
+,round(cast(avg(case when date_format(from_unixtime((od_time_stamp-{TIME_DIFF}), 'UTC'), '%H') = '17' then (abs(track_travel_time - calc_travel_time)/600.000) end) as decimal(5,2)),2) as time_eta_diff_17
+,round(cast(avg(case when date_format(from_unixtime((od_time_stamp-{TIME_DIFF}), 'UTC'), '%H') = '18' then (abs(track_travel_time - calc_travel_time)/600.000) end) as decimal(5,2)),2) as time_eta_diff_18
+,round(cast(avg(case when date_format(from_unixtime((od_time_stamp-{TIME_DIFF}), 'UTC'), '%H') = '19' then (abs(track_travel_time - calc_travel_time)/600.000) end) as decimal(5,2)),2) as time_eta_diff_19
+,round(cast(avg(case when date_format(from_unixtime((od_time_stamp-{TIME_DIFF}), 'UTC'), '%H') = '20' then (abs(track_travel_time - calc_travel_time)/600.000) end) as decimal(5,2)),2) as time_eta_diff_20
+,round(cast(avg(case when date_format(from_unixtime((od_time_stamp-{TIME_DIFF}), 'UTC'), '%H') = '21' then (abs(track_travel_time - calc_travel_time)/600.000) end) as decimal(5,2)),2) as time_eta_diff_21
+,round(cast(avg(case when date_format(from_unixtime((od_time_stamp-{TIME_DIFF}), 'UTC'), '%H') = '22' then (abs(track_travel_time - calc_travel_time)/600.000) end) as decimal(5,2)),2) as time_eta_diff_22
+,round(cast(avg(case when date_format(from_unixtime((od_time_stamp-{TIME_DIFF}), 'UTC'), '%H') = '23' then (abs(track_travel_time - calc_travel_time)/600.000) end) as decimal(5,2)),2) as time_eta_diff_23
+from data1
