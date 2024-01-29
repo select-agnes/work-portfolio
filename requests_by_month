@@ -1,0 +1,28 @@
+with data_1 as (
+select
+substr(opday, 1,6) as opday,substr(optime,1,2) as optime,
+count() as all_count,
+count(case when rp_type=0 then 1 end) as type0,
+count(case when rp_type=1 then 1 end) as type1,
+count(case when rp_type=2 then 1 end) as type2,
+count(case when rp_type=3 then 1 end) as type3
+from
+(select distinct opday, optime, od_id, rp_type
+from user_od_req_full
+where
+opday between '20231101' and '20231130'
+and length(opday) = 8
+and od_id not like'%TID%') as a
+group by opday, optime
+order by opday, optime
+)
+select
+opday, optime,
+all_count, type0, type1, type2,type3,
+100(type0/all_count) as type0_rate,
+100*(type1/all_count) as type1_rate,
+100*(type2/all_count) as type2_rate,
+100*(type3/all_count) as type3_rate
+from
+data_1
+order by optime, opday
