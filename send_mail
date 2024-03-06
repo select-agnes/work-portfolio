@@ -98,7 +98,7 @@ for file_descriptor in files:
                     f"attachment; filename={(os.path.basename(file_descriptor)).split('.')[0]  + '_' + str(yesterday) + '.xlsx'}")
     data.attach(part)
 
-data['Subject'] = str(yesterday) + ' NorthAmerica LMS 모니터링 결과'
+data['Subject'] = str(yesterday) + ' NorthAmerica ABC 모니터링 결과'
 data['To'] = 'xxxxxxxxxx@xxxxxx.com'
 smtp.sendmail('an email address', data['To'].split(','), data.as_string())
 
