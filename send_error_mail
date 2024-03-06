@@ -19,7 +19,7 @@ Args:
 smtp = smtplib.SMTP('an email address', 25)
 smtp.ehlo()
 smtp.starttls()
-smtp.login('an email address', 'A!0SM01160')
+smtp.login('an email address', 'A!0SMxxxxx')
 
 data = MIMEMultipart("mixed")
 
@@ -39,7 +39,7 @@ else:
                    "padding : src='cid:capture0'> <br />", 'html')
     data.attach(msg)
 
-data['Subject'] = str(yesterday) + ' NorthAmerica LMS 모니터링 실패'
+data['Subject'] = str(yesterday) + ' NorthAmerica ABC 모니터링 실패'
 data['To'] = 'an email address'
 smtp.sendmail('an email address',
               'an email address', data.as_string())
