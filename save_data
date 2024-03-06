@@ -4,7 +4,7 @@ import openpyxl as op
 def save_xlsx(protocol, result, date):
 
 result = 'Proceeding: 0 Success: 30,683,969 TimeOut: 0 Failed: 51,356'
-protocol = 'LMS_DATA'
+protocol = 'ABC_DATA'
 date = '2023-11-29'
 xlsx_path = 'C:/Users/xxxxxxxx/OneDrive - HMGNA/Documents/Python_project/crawling/NorthAmerica/xlsx/'
 file_path = xlsx_path + 'NorthAmerica' + '.xlsx'
