@@ -37,10 +37,10 @@ PWD = result[1]
 
 Default Configuration
 DEFAULT_PATH = "C:/Users/xxxxxxxx/OneDrive - HMGNA/Documents/Python_project/crawling/NorthAmerica/"
-hma_prod_url = 'https://10.112.224.29:xxxx/'
-kus_prod_url = 'https://10.112.224.42:xxxx/'
-hacc_prod_url = 'https://10.112.224.74:xxxx/'
-kci_prod_url = 'https://10.112.224.84:xxxx/'
+hma_prod_url = 'https://xx.xxx.xxx.xx:xxxx/'
+kus_prod_url = 'https://xx.xxx.xxx.xx:xxxx/'
+hacc_prod_url = 'https://xx.xxx.xxx.xx:xxxx/'
+kci_prod_url = 'https://xx.xxx.xxx.xx:xxxx/'
 
 def get_pass_fail(*protocol):
 """Returns the yesterday 00:00 ~ 24:00 success/failure value corresponding to the protocol.
@@ -52,7 +52,7 @@ Returns:
     string: Returns a crawled string containing pass/fail from url
 
 Example:
-    >>> r = get_pass_fail('RUT-A', 'GRP-F')
+    >>> r = get_pass_fail('ABC-A', 'ABC-F')
     >>> print(r)
     'Proceeding: 0 Success: 30,683,969 TimeOut: 0 Failed: 51,356'
 """
@@ -93,26 +93,26 @@ time.sleep(10)
 elem.send_keys(Keys.RETURN)
 time.sleep(20)
 
-total = get_pass_fail('RUT-A', 'GRP-F', 'GRP-P', 'GRP-E', 'GRP-U', 'GRP-I')
-rutA = get_pass_fail('RUT-A')
-grpF = get_pass_fail('GRP-F')
-grpP = get_pass_fail('GRP-P')
-grpE = get_pass_fail('GRP-E')
-grpU = get_pass_fail('GRP-U')
-grpI = get_pass_fail('GRP-I')
+total = get_pass_fail('ABC-A', 'ABC-F', 'ABC-P', 'ABC-E', 'ABC-U', 'ABC-I')
+abcA = get_pass_fail('ABC-A')
+abcF = get_pass_fail('ABC-F')
+abcP = get_pass_fail('ABC-P')
+abcE = get_pass_fail('ABC-E')
+abcU = get_pass_fail('ABC-U')
+abcI = get_pass_fail('ABC-I')
 
-Protocols = ['TOTAL', 'RUT-A', 'GRP-F', 'GRP-P', 'GRP-E', 'GRP-U', 'GRP-I']
-PassFails = [total, rutA, grpF, grpP, grpE, grpU, grpI]
+Protocols = ['TOTAL', 'ABC-A', 'ABC-F', 'ABC-P', 'ABC-E', 'ABC-U', 'ABC-I']
+PassFails = [total, abcA, abcF, abcP, abcE, abcU, abcI]
 
 # 이미 엑셀에 동일 날짜가 존재하면 엑셀에 다시 입력시키기 X. 그림 다시 그려 저장하기 X.
 save_data.save_xlsx('TOTAL', total, yesterday)
 draw_graph.draw('TOTAL', yesterday)
-save_data.save_xlsx('RUT-A', rutA, yesterday)
-save_data.save_xlsx('GRP-F', grpF, yesterday)
-save_data.save_xlsx('GRP-P', grpP, yesterday)
-save_data.save_xlsx('GRP-E', grpE, yesterday)
-save_data.save_xlsx('GRP-U', grpU, yesterday)
-save_data.save_xlsx('GRP-I', grpI, yesterday)
+save_data.save_xlsx('ABC-A', abcA, yesterday)
+save_data.save_xlsx('ABC-F', abcF, yesterday)
+save_data.save_xlsx('ABC-P', abcP, yesterday)
+save_data.save_xlsx('ABC-E', abcE, yesterday)
+save_data.save_xlsx('ABC-U', abcU, yesterday)
+save_data.save_xlsx('ABC-I', abcI, yesterday)
 
 # 이메일로 결과값 (target) 전송
 send_mail.send(Protocols, PassFails, yesterday)
