@@ -1,5 +1,5 @@
 SELECT opday, rp_type, count(*)
-FROM bluelink_prd.user_od_req_full
+FROM ********_prd.****_od_req_full
 WHERE opday BETWEEN '20231126' AND '20231202'
 GROUP BY opday, rp_type
 ORDER BY opday, rp_type
