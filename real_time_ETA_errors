@@ -1,5 +1,5 @@
 with data1 as(
-select * from bluelink_prd.user_od_summary where opday in ('{OPDAY}', '{NEXT_OPDAY}')
+select * from ********_prd.****_od_summary where opday in ('{OPDAY}', '{NEXT_OPDAY}')
 and od_time_stamp >= {UTC_START_TIME} and od_time_stamp < {UTC_END_TIME} and matching_flag in (0,23)
 and track_travel_time >= 0
 )
