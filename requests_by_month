@@ -8,7 +8,7 @@ count(case when rp_type=2 then 1 end) as type2,
 count(case when rp_type=3 then 1 end) as type3
 from
 (select distinct opday, optime, od_id, rp_type
-from user_od_req_full
+from ****_od_req_full
 where
 opday between '20231101' and '20231130'
 and length(opday) = 8
