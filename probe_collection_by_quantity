@@ -1,5 +1,5 @@
 select titp_ver, count(distinct device_id)
-from bluelink_prd.user_raw_traj
+from ********_prd.****_raw_traj
 where opday between '20231101' and '20231108'
 group by titp_ver
 order by titp_ver
