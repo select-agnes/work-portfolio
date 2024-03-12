@@ -1,5 +1,5 @@
-select map_version, count(distinct device_id) as cnt
-from bluelink_prd.user_od_req_full
+select ***_version, count(distinct device_id) as cnt
+from ********_prd.****_od_req_full
 where opday between '20231201' and '20231208'
-group by map_version
-order by map_version
+group by ***_version
+order by ***_version
